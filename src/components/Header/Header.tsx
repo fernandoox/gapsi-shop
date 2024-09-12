@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, IconButton, Badge } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import logo from "../../assets/logo.png";
-
+import "./styles.css";
 type HeaderProps = {
   cartCount: number;
   onCartClick: () => void;
@@ -15,10 +15,9 @@ const Header: React.FC<HeaderProps> = ({ cartCount, onCartClick }) => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "lightgray", padding: 1 }}>
+    <AppBar position="fixed" sx={{ backgroundColor: "lightgray", padding: 1 }}>
       <Toolbar>
         <img src={logo} alt="Gapsi Logo" />
-
         <Typography
           variant="h6"
           component="div"
@@ -26,16 +25,21 @@ const Header: React.FC<HeaderProps> = ({ cartCount, onCartClick }) => {
         >
           e-Commerce Gapsi
         </Typography>
-
         <IconButton onClick={handleReset}>
           <RestartAltIcon />
         </IconButton>
-
-        <IconButton onClick={onCartClick}>
-          <Badge badgeContent={cartCount} color="primary">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
+        <div className="drag-here">
+          <IconButton onClick={onCartClick}>
+            <Badge
+              badgeContent={cartCount}
+              color="primary"
+              sx={{ marginRight: 1 }}
+            >
+              <ShoppingCartIcon />
+            </Badge>
+            <Typography>Arrastre/vea aquí los prodcutos</Typography>
+          </IconButton>
+        </div>
       </Toolbar>
     </AppBar>
   );

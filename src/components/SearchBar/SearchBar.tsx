@@ -26,7 +26,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       justifyContent="center"
       alignItems="center"
       mb={4}
-      mt={5}
+      mt={14}
     >
       <TextField
         variant="outlined"
