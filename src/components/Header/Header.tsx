@@ -1,10 +1,15 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, IconButton } from "@mui/material";
+import { AppBar, Toolbar, Typography, IconButton, Badge } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import logo from "../../assets/logo.png";
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  cartCount: number;
+  onCartClick: () => void;
+};
+
+const Header: React.FC<HeaderProps> = ({ cartCount, onCartClick }) => {
   const handleReset = () => {
     window.location.reload();
   };
@@ -26,9 +31,10 @@ const Header: React.FC = () => {
           <RestartAltIcon />
         </IconButton>
 
-        <IconButton>
-          <ShoppingCartIcon />
-          Arrasta productos aqui
+        <IconButton onClick={onCartClick}>
+          <Badge badgeContent={cartCount} color="primary">
+            <ShoppingCartIcon />
+          </Badge>
         </IconButton>
       </Toolbar>
     </AppBar>

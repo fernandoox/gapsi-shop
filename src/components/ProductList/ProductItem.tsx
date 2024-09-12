@@ -1,7 +1,15 @@
-// ProductItem.js
 import React from "react";
 import { Product } from "../../models/Product";
-import { Card, CardContent, Typography, CardMedia, Box } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+  Box,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator"; // Importar el ícono de drag
 
 type ProductItemProps = {
   product: Product;
@@ -27,6 +35,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onDragStart }) => {
           flexDirection: "column",
           justifyContent: "center",
           p: 2,
+          flexGrow: 1, 
         }}
       >
         <CardContent>
@@ -34,13 +43,25 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onDragStart }) => {
           <Typography variant="body2" color="grey">
             ${product.price}
           </Typography>
-          <Typography
-            variant="body1" // Stock más grande
-            color={product.inStock ? "green" : "red"}
-          >
+          <Typography variant="body1" color={product.inStock ? "green" : "red"}>
             {product.inStock ? "In Stock" : "Out of Stock"}
           </Typography>
         </CardContent>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          p: 2,
+        }}
+      >
+        <Tooltip title="Arrastra el producto al carrito" arrow>
+          <IconButton>
+            <DragIndicatorIcon sx={{ color: "gray" }} />
+          </IconButton>
+        </Tooltip>
       </Box>
     </Card>
   );

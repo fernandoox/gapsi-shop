@@ -1,21 +1,17 @@
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-import "./App.css";
-
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header/Header";
-import { useState, useEffect } from "react";
 import SearchBar from "./components/SearchBar/SearchBar";
 import { Product } from "./models/Product";
 import { fetchProducts } from "./api/productsApi";
 import ProductList from "./components/ProductList/ProductList";
+import CartDialog from "./components/Cart/CartDialog";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState<number>(1);
   const [keyword, setKeyword] = useState<string>("");
   const [cart, setCart] = useState<Product[]>([]);
+  const [isCartDialogOpen, setCartDialogOpen] = useState(false);
 
   useEffect(() => {
     if (keyword) {
@@ -48,26 +44,28 @@ function App() {
     return cart.some((item) => item.id === productId);
   };
 
+  const handleRemoveFromCart = (productId: string) => {
+    setCart(cart.filter((item) => item.id !== productId));
+  };
+
   return (
     <div className="app" onDrop={handleDrop} onDragOver={handleDragOver}>
-      <Header />
+      <Header
+        cartCount={cart.length}
+        onCartClick={() => setCartDialogOpen(true)}
+      />
       <SearchBar onSearch={handleSearch} />
       <ProductList
         products={products}
         onAddToCart={(product) => setCart([...cart, product])}
         isProductInCart={isProductInCart}
       />
-      <div>
-        <h2>Cart</h2>
-        {cart.map((product) => (
-          <div key={product.id}>
-            <p>
-              {product.name} - ${product.price}
-            </p>
-          </div>
-        ))}
-      </div>
-      <pre>{JSON.stringify(products, undefined, 2)}</pre>
+      <CartDialog
+        open={isCartDialogOpen}
+        onClose={() => setCartDialogOpen(false)}
+        cart={cart}
+        onRemove={handleRemoveFromCart}
+      />
     </div>
   );
 }
