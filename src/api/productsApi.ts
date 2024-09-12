@@ -11,7 +11,7 @@ export const fetchProducts = async (
       method: "GET",
       headers: {
         "X-RapidAPI-Host": "axesso-walmart-data-service.p.rapidapi.com",
-        "X-RapidAPI-Key": "fce0e15738msh6a87c0c9db9505cp14b74fjsn54bc768f3bc7",
+        "X-RapidAPI-Key": import.meta.env.VITE_RAPIDAPI_KEY,
       },
     }
   );
