@@ -1,7 +1,7 @@
 // ProductList.js
 import React from "react";
 import { Product } from "../../models/Product";
-import { Card, CardContent, Typography, CardMedia } from "@mui/material";
+import ProductItem from "./ProductItem";
 
 type ProductListProps = {
   products: Product[];
@@ -11,43 +11,24 @@ type ProductListProps = {
 
 const ProductList: React.FC<ProductListProps> = ({
   products,
-  onAddToCart,
   isProductInCart,
 }) => {
-  const handleDragStart = (e: React.DragEvent, product: Product) => {
-    e.dataTransfer.setData("productId", product.id);
+  const handleDragStart = (e: React.DragEvent, productId: string) => {
+    e.dataTransfer.setData("productId", productId);
   };
 
   return (
-    <div>
+    <div
+      style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+    >
       {products
-        .filter((product) => !isProductInCart(product.id)) // Filtra productos ya en el carrito
+        .filter((product) => !isProductInCart(product.id))
         .map((product) => (
-          <Card
+          <ProductItem
             key={product.id}
-            sx={{ maxWidth: 345, mb: 2 }}
-            draggable
-            onDragStart={(e) => handleDragStart(e, product)}
-          >
-            <CardMedia
-              component="img"
-              height="140"
-              image={product.image}
-              alt={product.name}
-            />
-            <CardContent>
-              <Typography variant="h6">{product.name}</Typography>
-              <Typography variant="body2" color="text.secondary">
-                ${product.price}
-              </Typography>
-              <Typography
-                variant="body2"
-                color={product.inStock ? "green" : "red"}
-              >
-                {product.inStock ? "In Stock" : "Out of Stock"}
-              </Typography>
-            </CardContent>
-          </Card>
+            product={product}
+            onDragStart={(e) => handleDragStart(e, product.id)}
+          />
         ))}
     </div>
   );

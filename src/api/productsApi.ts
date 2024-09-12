@@ -1,3 +1,4 @@
+import { ApiProduct } from "../models/ApiResponse";
 import { Product } from "../models/Product";
 
 export const fetchProducts = async (
@@ -16,14 +17,26 @@ export const fetchProducts = async (
   );
 
   const data = await response.json();
-  console.log(data);
-  return data.item.props.pageProps.initialData.searchResult.itemStacks[0].items.map(
-    (item: any) => ({
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      image: item.image,
-      inStock: !item.isOutOfStock,
-    })
-  );
+
+  const seenIds = new Set<string>();
+
+  const uniqueProducts =
+    data.item.props.pageProps.initialData.searchResult.itemStacks[0].items
+      .filter((item: ApiProduct) => item.image && item.name)
+      .filter((item: ApiProduct) => {
+        if (seenIds.has(item.id)) {
+          return false; // Excluir el producto si el ID ya ha sido visto
+        }
+        seenIds.add(item.id);
+        return true; // Incluir el producto si es único
+      })
+      .map((item: ApiProduct) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        image: item.image,
+        inStock: !item.isOutOfStock,
+      }));
+
+  return uniqueProducts;
 };
