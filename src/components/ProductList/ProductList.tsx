@@ -1,6 +1,7 @@
 import React from "react";
 import { Product } from "../../models/Product";
 import ProductItem from "./ProductItem";
+import { Box } from "@mui/material";
 
 type ProductListProps = {
   products: Product[];
@@ -17,8 +18,14 @@ const ProductList: React.FC<ProductListProps> = ({
   };
 
   return (
-    <div
-      style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+        padding: 2,
+      }}
     >
       {products
         .filter((product) => !isProductInCart(product.id))
@@ -29,7 +36,7 @@ const ProductList: React.FC<ProductListProps> = ({
             onDragStart={(e) => handleDragStart(e, product.id)}
           />
         ))}
-    </div>
+    </Box>
   );
 };
 

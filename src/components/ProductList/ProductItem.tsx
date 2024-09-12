@@ -19,7 +19,7 @@ type ProductItemProps = {
 const ProductItem: React.FC<ProductItemProps> = ({ product, onDragStart }) => {
   return (
     <Card
-      sx={{ display: "flex", width: "100%", maxWidth: 800, mb: 2 }}
+      sx={{ display: "flex", width: 800, mb: 2 }} // Ajusta el ancho aquí
       draggable
       onDragStart={onDragStart}
     >
@@ -48,7 +48,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onDragStart }) => {
           </Typography>
         </CardContent>
       </Box>
-
       <Box
         sx={{
           display: "flex",
