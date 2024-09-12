@@ -9,7 +9,7 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator"; // Importar el ícono de drag
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
 type ProductItemProps = {
   product: Product;
@@ -35,7 +35,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, onDragStart }) => {
           flexDirection: "column",
           justifyContent: "center",
           p: 2,
-          flexGrow: 1, 
+          flexGrow: 1,
         }}
       >
         <CardContent>

@@ -1,4 +1,3 @@
-// ProductList.js
 import React from "react";
 import { Product } from "../../models/Product";
 import ProductItem from "./ProductItem";

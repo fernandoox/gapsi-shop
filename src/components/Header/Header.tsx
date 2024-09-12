@@ -25,9 +25,7 @@ const Header: React.FC<HeaderProps> = ({ cartCount, onCartClick }) => {
         >
           e-Commerce Gapsi
         </Typography>
-        <IconButton onClick={handleReset}>
-          <RestartAltIcon />
-        </IconButton>
+
         <div className="drag-here">
           <IconButton onClick={onCartClick}>
             <Badge
@@ -40,6 +38,11 @@ const Header: React.FC<HeaderProps> = ({ cartCount, onCartClick }) => {
             <Typography>Arrastre/vea aquí los prodcutos</Typography>
           </IconButton>
         </div>
+
+        <IconButton onClick={handleReset}>
+          <RestartAltIcon />
+          <Typography>Restart</Typography>
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

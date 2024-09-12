@@ -5,6 +5,8 @@ import { Product } from "./models/Product";
 import { fetchProducts } from "./api/productsApi";
 import ProductList from "./components/ProductList/ProductList";
 import CartDialog from "./components/Cart/CartDialog";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -12,11 +14,14 @@ function App() {
   const [keyword, setKeyword] = useState<string>("");
   const [cart, setCart] = useState<Product[]>([]);
   const [isCartDialogOpen, setCartDialogOpen] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (keyword) {
+      setLoading(true);
       fetchProducts(keyword, page).then((newProducts) => {
         setProducts((prevProducts) => [...prevProducts, ...newProducts]);
+        setLoading(false);
       });
     }
   }, [keyword, page]);
@@ -55,11 +60,17 @@ function App() {
         onCartClick={() => setCartDialogOpen(true)}
       />
       <SearchBar onSearch={handleSearch} />
-      <ProductList
-        products={products}
-        onAddToCart={(product) => setCart([...cart, product])}
-        isProductInCart={isProductInCart}
-      />
+      {loading ? (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <ProductList
+          products={products}
+          onAddToCart={(product) => setCart([...cart, product])}
+          isProductInCart={isProductInCart}
+        />
+      )}
       <CartDialog
         open={isCartDialogOpen}
         onClose={() => setCartDialogOpen(false)}
